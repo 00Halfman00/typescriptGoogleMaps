@@ -29,7 +29,6 @@ const renderMap = (): void => {
     })
     .catch((err) => console.error(err));
 };
-
 //Initialize and add the map
 // example from goole website to load map and marker on map using async await
 async function initMap(): Promise<void> {

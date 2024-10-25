@@ -1,7 +1,7 @@
-interface MarkInfo {
+export interface MarkInfo {
   name: string;
-  pin: HTMLElement | null;
-  email: string | null;
+  pin: HTMLElement;
+  email: string;
   location: {
     lat: number;
     lng: number;
@@ -9,8 +9,8 @@ interface MarkInfo {
 }
 
 export class customMap {
+  // make map only accessible inside customMap
   private map: google.maps.Map;
-  // mark: google.maps.marker.AdvancedMarkerElement;
 
   constructor(mapDivId: string) {
     this.createMaps(mapDivId);
@@ -39,10 +39,6 @@ export class customMap {
       center: { lat: 25.0, lng: 350 },
       mapId: 'DEMO_MAP_ID',
     });
-    // this.map.
-    this.map.addListener('mouseover', () => {
-      console.log('clicked on map');
-    });
   }
 
   // using async await to create makers on map v1
@@ -60,15 +56,16 @@ export class customMap {
       content: MarkInfo.pin,
     });
 
-    const infowindow = new google.maps.InfoWindow({
-      content: MarkInfo.email
-        ? `<p>${MarkInfo.name}</p><a href=${MarkInfo.email}> website </a>`
-        : `<p>${MarkInfo.name}</p>`,
-      ariaLabel: 'SOMEWHRE',
-    });
-    infowindow.open({
-      anchor: marker,
-      map: this.map,
+    marker.addListener('click', () => {
+      const infowindow = new google.maps.InfoWindow({
+        content: `<p>${MarkInfo.name}</p><a href=${MarkInfo.email}> website </a>`,
+        ariaLabel: 'SOMEWHRE',
+      });
+
+      infowindow.open({
+        anchor: marker,
+        map: this.map,
+      });
     });
   }
 }

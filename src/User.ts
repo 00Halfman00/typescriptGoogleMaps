@@ -1,13 +1,16 @@
 import { faker } from '@faker-js/faker';
+import { MarkInfo } from './Map';
 
-// import faker from 'faker';
+// custom marker image on map for user
+const beachFlagImg = document.createElement('img');
+beachFlagImg.src =
+  'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 
-const dude = faker;
-
-export class User {
+export class User implements MarkInfo {
   //////////////// properties
   name: string;
   email: string;
+  pin: HTMLElement;
   location: {
     lat: number;
     lng: number;
@@ -15,8 +18,9 @@ export class User {
 
   ///////////////// constructor
   constructor() {
+    this.pin = beachFlagImg;
     this.name = faker.name.fullName();
-    (this.email = faker.internet.email()),
+    (this.email = 'https://google.com'),
       (this.location = {
         lat: +faker.address.latitude(),
         lng: +faker.address.longitude(),
